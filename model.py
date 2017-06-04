@@ -71,8 +71,8 @@ def train_model(x_train, x_valid, y_train, y_valid):
     '''
     Keras model to train the images.
     '''
-    train_gen = generate_batch(x_train, y_train, batch_size=32)
-    validation_gen = generate_batch(x_valid, y_valid, batch_size=32)
+    train_gen = generate_batch(x_train, y_train, batch_size=64)
+    validation_gen = generate_batch(x_valid, y_valid, batch_size=64)
 
     row, col, ch = 75, 320, 3
     model = Sequential()
@@ -89,17 +89,25 @@ def train_model(x_train, x_valid, y_train, y_valid):
     model.compile(loss='mse', optimizer='adam')
     model.fit_generator(train_gen, samples_per_epoch=len(x_train), 
                         validation_data=validation_gen,
-                        nb_val_samples=len(x_valid), nb_epoch=5)
+                        nb_val_samples=len(x_valid), nb_epoch=5,verbose=1)
     model.save('model.h5')
     
 def main():
     '''
     main function to run the training process.
     '''
+    
     csvpath = r"/Users/srikanthnarayanan/Desktop/Behavioural_Cloning/Data_Run_2017_Jun_01_8_54_PM/driving_log.csv"
     imgdir = r"/Users/srikanthnarayanan/Desktop/Behavioural_Cloning/Data_Run_2017_Jun_01_8_54_PM/IMG"
     x_train, x_valid, y_train, y_valid = load_dataset(csvpath, imgdir)
     train_model(x_train, x_valid, y_train, y_valid)
-
+    
+    import gc
+    from keras import backend as K
+    
+    gc.collect()
+    K.clear_session()
+    
+    print("Garbage Collected.... Keras Session Cleared!")
 if __name__ == "__main__":
     main()
