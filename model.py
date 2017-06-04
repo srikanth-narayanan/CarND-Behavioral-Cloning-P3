@@ -42,14 +42,15 @@ def generate_batch(x,y, batch_size=32):
     Generator to provide sufficient images for training or validation
     '''
     x_new, y_new = shuffle(x, y)
-    nsamples = len(x)
-    images=[]
-    angles=[]
+    nsamples = len(x_new)
+    
     while 1:
         shuffle(x, y)
         for offset in range(0, nsamples, batch_size):
-            batch_x = x[offset:offset + batch_size]
-            batch_y = y[offset:offset + batch_size]
+            batch_x = x_new[offset:offset + batch_size]
+            batch_y = y_new[offset:offset + batch_size]
+            images=[]
+            angles=[]
             for img, ang in zip(batch_x,batch_y):
                 new_img = cv2.imread(img)
                 new_img = _crop(new_img)
@@ -71,8 +72,8 @@ def train_model(x_train, x_valid, y_train, y_valid):
     '''
     Keras model to train the images.
     '''
-    train_gen = generate_batch(x_train, y_train, batch_size=64)
-    validation_gen = generate_batch(x_valid, y_valid, batch_size=64)
+    train_gen = generate_batch(x_train, y_train, batch_size=32)
+    validation_gen = generate_batch(x_valid, y_valid, batch_size=32)
 
     row, col, ch = 75, 320, 3
     model = Sequential()
@@ -97,8 +98,8 @@ def main():
     main function to run the training process.
     '''
     
-    csvpath = r"/Users/srikanthnarayanan/Desktop/Behavioural_Cloning/data/driving_log.csv"
-    imgdir = r"/Users/srikanthnarayanan/Desktop/Behavioural_Cloning/data/IMG"
+    csvpath = r"/home/carnd/bhclone/data/driving_log.csv"
+    imgdir = r"/home/carnd/bhclone/data/IMG"
     x_train, x_valid, y_train, y_valid = load_dataset(csvpath, imgdir)
     train_model(x_train, x_valid, y_train, y_valid)
     
