@@ -97,16 +97,13 @@ def main():
     main function to run the training process.
     '''
     
-    csvpath = r"/Users/srikanthnarayanan/Desktop/Behavioural_Cloning/Data_Run_2017_Jun_01_8_54_PM/driving_log.csv"
-    imgdir = r"/Users/srikanthnarayanan/Desktop/Behavioural_Cloning/Data_Run_2017_Jun_01_8_54_PM/IMG"
+    csvpath = r"/Users/srikanthnarayanan/Desktop/Behavioural_Cloning/data/driving_log.csv"
+    imgdir = r"/Users/srikanthnarayanan/Desktop/Behavioural_Cloning/data/IMG"
     x_train, x_valid, y_train, y_valid = load_dataset(csvpath, imgdir)
     train_model(x_train, x_valid, y_train, y_valid)
     
     import gc
-    from keras import backend as K
-    
     gc.collect()
-    K.clear_session()
     
     print("Garbage Collected.... Keras Session Cleared!")
 if __name__ == "__main__":
