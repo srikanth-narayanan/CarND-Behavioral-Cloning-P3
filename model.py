@@ -82,19 +82,19 @@ def train_model(x_train, x_valid, y_train, y_valid):
     model.add(Lambda(lambda x: x / 127.5 - 1., input_shape=SHAPE))
 
     # 1st Convolution layer with output of 24. kernel (5,5)
-    model.add(Conv2D(24, 5, 5, activation="elu", strides=(2, 2)))
+    model.add(Conv2D(24, (5, 5), activation="elu", strides=(2, 2)))
 
     # 2nd Convolution layer with output of 36. kernel (5,5)
-    model.add(Conv2D(36, 5, 5, activation="elu", strides=(2, 2)))
+    model.add(Conv2D(36, (5, 5), activation="elu", strides=(2, 2)))
 
     # 3rd Convolution layer with output of 48. kernel (5,5)
-    model.add(Conv2D(48, 5, 5, activation="elu", strides=(2, 2)))
+    model.add(Conv2D(48, (5, 5), activation="elu", strides=(2, 2)))
 
     # 4th Convolution layer with output of 64. kernel (3,3)
-    model.add(Conv2D(48, 3, 3, activation="elu"))
+    model.add(Conv2D(64, (3, 3), activation="elu"))
 
     # 5th Convolution layer with output of 64. kernel (3,3)
-    model.add(Conv2D(48, 3, 3, activation="elu"))
+    model.add(Conv2D(64, (3, 3), activation="elu"))
 
     # 6th Flatten
     model.add(Flatten())
@@ -107,6 +107,9 @@ def train_model(x_train, x_valid, y_train, y_valid):
 
     # 9th Dense or Fully Connected
     model.add(Dense(10, activation="relu"))
+    
+    # 10th Dense or Fully Connected
+    model.add(Dense(1))
 
     # compilation of the model with ADAM optimiser
     model.compile(loss='mse', optimizer=Adam(lr=LEARN_RATE))
@@ -125,13 +128,13 @@ def main():
     main function to run the training process.
     '''
     parser = argparse.ArgumentParser(description="Behavioural Clonning")
-    parser.add_argument('-f', help='csv file path', dest='csvpath', type='str')
-    parser.add_argument('-d', help='img directory', dest='imgdir', type='str')
+    parser.add_argument('-f', help='csv file path', dest='csvpath')
+    parser.add_argument('-d', help='img directory', dest='imgdir')
 
     # parse arguments
     args = parser.parse_args()
     csvpath = args.csvpath
-    imgdir = args.imgdir
+    imgdir = args.imgdir    
 
     # load dataset and train model
     x_train, x_valid, y_train, y_valid = load_dataset(csvpath, imgdir)
