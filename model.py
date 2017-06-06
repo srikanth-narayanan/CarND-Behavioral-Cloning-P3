@@ -15,7 +15,7 @@ import os
 from sklearn.model_selection import train_test_split
 import numpy as np
 from keras.models import Sequential
-from keras.layers import Flatten, Dense, Lambda
+from keras.layers import Flatten, Dense, Lambda, Dropout
 from keras.layers.convolutional import Conv2D
 from keras.optimizers import Adam
 from imagemanager import batch_gen
@@ -95,6 +95,9 @@ def train_model(x_train, x_valid, y_train, y_valid):
 
     # 5th Convolution layer with output of 64. kernel (3,3)
     model.add(Conv2D(64, (3, 3), activation="elu"))
+    
+    # drop out to avoid overfitting
+    model.add(Dropout(0.5))
 
     # 6th Flatten
     model.add(Flatten())
