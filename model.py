@@ -27,7 +27,7 @@ def load_dataset(csvpath, imgdir):
     Function to parse the csv file and corrects its path. The Images are loaded
     using opencv in to image data.
     '''
-    steering_offset = 0.1
+    steering_offset = 0.2
     csvframe = pd.read_csv(csvpath, names=['center', 'left', 'right',
                                            'steering', 'throttle', 'brake',
                                            'speed'])
