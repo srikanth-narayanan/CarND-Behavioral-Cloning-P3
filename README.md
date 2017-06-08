@@ -14,10 +14,8 @@ The Behaviour cloning project involves in training a convolution neural network 
 
 In this project the following tasks are accomplished.
 
-- Generate training data set by driving in the unity simulator
-- Design and implement the convolution neural network architecture
-	- implement the model
-	- The model predicts the steering angle based on the training data set.
+- Generate training data set by driving in the unity simulator.
+- Design and implement the convolution neural network architecture.
 - Train the model using the training data set.
 - Generate a sucessfull drive around the track in an autnomous mode using the trained model.
 
@@ -34,9 +32,35 @@ Files Uploaded
 The implementation is based on the [NVIDIA model] (https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/). The architecture seems to be proven for this project. The architecture is based on several layers of convolution network followed by several fully connected layers.
 
 The following additions are made to adapt the model to this project.
-- A lambda layer is added to normalise the training data.
+- A lambda layer is added to normalise the training data. ( Code line 82)
 - A specific learning rate is used for the adam optimizer.
-- In order to avoid overfitting a dropout layer has been added.
+- In order to avoid overfitting a dropout layer has been added. .( Code line 100)
+
+|layer				 | shape  				 |
+|:------------------:|:---------------------:|
+|Input Normlaisation | 66 x 200 x 3			 |
+|Convolution 		 | Filter 24, Kernel (5 x 5), Stride (2 x 2) , "elu"|
+|Convolution 		 | Filter 36, Kernel (5 x 5), Stride (2 x 2) , "elu"|
+|Convolution 		 | Filter 48, Kernel (5 x 5), Stride (2 x 2) , "elu"|
+|Convolution 		 | Filter 64, Kernel (3 x 3), Stride (2 x 2) , "elu"|
+|Convolution 		 | Filter 64, Kernel (3 x 3), Stride (2 x 2) , "elu"|
+|Dropout 		 	 | 0.5					 |	
+|Flatten 		 	 | 1164, "relu"			 | 
+|Flatten 		 	 | 100, "relu"			 | 
+|Flatten 		 	 | 50, "relu"			 |
+|Flatten 		 	 | 10, "relu"			 |
+|Flatten 		 	 | 1, 			 		 |
+
+
+The model uses RELU functions in the dense layer and ELU function in the convolution layer to introduce non-linearity in the layers. 
+
+#### Model parameter tuning
+
+After monitoring several training session a learning rate of 1e-4 was choosen for the adam optimiser.
+
+#### Training data
+
+The behaviour of the car in the simulator is very sensitive to the quality of the training data and driver behaviour. After serveral attempts a good sample of training data was generated to train the model. Methods employed to train the model is covered in the next section.
 
 
 |										Autonomous Drive Video					       |
@@ -44,31 +68,6 @@ The following additions are made to adapt the model to this project.
 |[![Test Track](./images/Track.png)](https://www.youtube.com/watch?v=uAmqHHTDNF8&t=28s)|
 
 
-
-
-###Model Architecture and Training Strategy
-
-####1. An appropriate model architecture has been employed
-
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
-
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
-
-####2. Attempts to reduce overfitting in the model
-
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
-
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
-
-####3. Model parameter tuning
-
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
-
-####4. Appropriate training data
-
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
-
-For details about how I created the training data, see the next section. 
 
 ###Model Architecture and Training Strategy
 
