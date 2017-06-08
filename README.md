@@ -10,7 +10,10 @@
 [image6]: ./images/resized.png "resized Image"
 [image7]: ./images/recovery.jpg "recovery Image"
 
+The Behaviour cloning project involves in training a convolution neural network to learn a driver behaviour and reproduce the behaviour to autonomously navigate a trained path.
+
 In this project the following tasks are accomplished.
+
 - Generate training data set by driving in the unity simulator
 - Design and implement the convolution neural network architecture
 	- implement the model
@@ -18,11 +21,27 @@ In this project the following tasks are accomplished.
 - Train the model using the training data set.
 - Generate a sucessfull drive around the track in an autnomous mode using the trained model.
 
+Files Uploaded
 
-|										Test Track					                   |
+- model.py - This conatins the script to train and validate the model. The network architecure is implemented in the file.
+- drive.py - The script to drive the car in autonomous mode using the trained model.
+- imagemanager.py - The script that contains the utilities to read the image, peform necessary image processing and a generator to feed the model.
+- model.h5 - The trained model weights.
+- Video.mp4 - The video of the center camera during the autonomous drive.
+
+## Model Architecture and Training Strategy
+
+The implementation is based on the [NVIDIA model] (https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/). The architecture seems to be proven for this project. The architecture is based on several layers of convolution network followed by several fully connected layers.
+
+The following additions are made to adapt the model to this project.
+- A lambda layer is added to normalise the training data.
+- A specific learning rate is used for the adam optimizer.
+- In order to avoid overfitting a dropout layer has been added.
+
+
+|										Autonomous Drive Video					       |
 |:------------------------------------------------------------------------------------:|
 |[![Test Track](./images/Track.png)](https://www.youtube.com/watch?v=uAmqHHTDNF8&t=28s)|
-|click on the image for youtube link|
 
 
 
