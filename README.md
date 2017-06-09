@@ -105,8 +105,7 @@ I added the additional augumentation for increased training scenarios for the mo
 - Introduction of left and right camera data provide a better perspective for the model in recovery scenarios. This is supported by a steering offset of 0.2.
 
 
-                                        
- ![Recovery Right][image6]
+                                        ![Recovery Right][image7]
 
 ####3. Creation of the Training Set & Training Process
 
