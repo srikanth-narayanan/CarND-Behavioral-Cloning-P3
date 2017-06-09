@@ -73,26 +73,21 @@ The behaviour of the car in the simulator is very sensitive to the quality of th
 
 - A comparison of the steering angle of the udacity dataset and my initial training set was compared. The udacity steering angle and drive was much smoother and cleaner for the model to learn a better behaviour. Driving with keyboard casued several overshoot. I managed to create a similar dataset to udacity.
 
-                                        
 ![Normal][image5]
-
 
 ##### Image Augumentation
 
 - The normal image was cropped to removed the unwated sky and front hood of the car.
 
-                                        
 ![Cropped][image3]
 
 - The nvidia model also recommends to use YUV colour space and the accepts a size of 66x200x3
-
 
 ![YUV colour Space][image2]
 
 I added the additional augumentation for increased training scenarios for the model.
 
 - The images are flipped to provide more addition clockwise direction as the track is mostly anit-clockwise drive. I ensured the steering angle was also altered accordingly to match the flipped image. Random brightness / darkness also added to improve the performance.
-
 
 ![YUV colour Space][image2] ![flipped][image4]
 
@@ -104,13 +99,4 @@ I added the additional augumentation for increased training scenarios for the mo
 
 - Introduction of left and right camera data provide a better perspective for the model in recovery scenarios. This is supported by a steering offset of 0.2.
 
-
-                                        ![Recovery Right][image7]
-
-####3. Creation of the Training Set & Training Process
-
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
-
-
-
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+![Recovery Right](https://github.com/srikanth-narayanan/Udacity-Self-Driving-Car/blob/master/Term-1/CarND-Behavioral-Cloning-P3/images/recovery.gif)
