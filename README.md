@@ -80,17 +80,14 @@ Example of the normal driving situations.
 ##### Image Augumentation
 
 - The normal image was cropped to removed the unwated sky and front hood of the car.
-
 ![Cropped][image3]
 
 - The nvidia model also recommends to use YUV colour space and the accepts a size of 66x200x3
-
 ![YUV colour Space][image2]
 
 I added the additional augumentation for increased training scenarios for the model.
 
 - The images are flipped to provide more addition clockwise direction as the track is mostly anit-clockwise drive. I ensured the steering angle was also altered accordingly to match the flipped image. Random brightness / darkness also added to improve the performance.
-
 ![YUV colour Space][image2] ![flipped][image4]
 
 - My original model without dropouts had higher loss on the validation set when compared to the training set. I added a droput layer to address this issue.
