@@ -73,7 +73,7 @@ The behaviour of the car in the simulator is very sensitive to the quality of th
 
 - A comparison of the steering angle of the udacity dataset and my initial training set was compared. The udacity steering angle and drive was much smoother and cleaner for the model to learn a better behaviour. Driving with keyboard casued several overshoot. I managed to create a similar dataset to udacity.
 
-Example of the normal driving situations.
+                                        
 ![Normal][image5]
 
 
@@ -81,15 +81,19 @@ Example of the normal driving situations.
 
 - The normal image was cropped to removed the unwated sky and front hood of the car.
 
-Cropped Image.
+                                        
 ![Cropped][image3]
 
 - The nvidia model also recommends to use YUV colour space and the accepts a size of 66x200x3
+
+
 ![YUV colour Space][image2]
 
 I added the additional augumentation for increased training scenarios for the model.
 
 - The images are flipped to provide more addition clockwise direction as the track is mostly anit-clockwise drive. I ensured the steering angle was also altered accordingly to match the flipped image. Random brightness / darkness also added to improve the performance.
+
+
 ![YUV colour Space][image2] ![flipped][image4]
 
 - My original model without dropouts had higher loss on the validation set when compared to the training set. I added a droput layer to address this issue.
@@ -100,6 +104,9 @@ I added the additional augumentation for increased training scenarios for the mo
 
 - Introduction of left and right camera data provide a better perspective for the model in recovery scenarios. This is supported by a steering offset of 0.2.
 
+
+                                        
+ ![Recovery Right][image6]
 
 ####3. Creation of the Training Set & Training Process
 
