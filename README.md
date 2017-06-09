@@ -80,6 +80,8 @@ Example of the normal driving situations.
 ##### Image Augumentation
 
 - The normal image was cropped to removed the unwated sky and front hood of the car.
+
+Cropped Image.
 ![Cropped][image3]
 
 - The nvidia model also recommends to use YUV colour space and the accepts a size of 66x200x3
