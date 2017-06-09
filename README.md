@@ -2,7 +2,7 @@
 
 [//]: # (Image References)
 
-[image1]: ./images/bright.png "Bright Image"
+[image1]: ./images/noflip.png "noflip"
 [image2]: ./images/clr.png "YUV image"
 [image3]: ./images/crop.png "Crop Image"
 [image4]: ./images/flip.png "flip Image"
@@ -36,7 +36,7 @@ A youtube link of the screen capture is available here.
 
 ## Model Architecture and Training Strategy
 
-The implementation is based on the [NVIDIA model] (https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/). 
+The implementation is based on the [NVIDIA model](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/). 
 
 The architecture seems to be proven for this project. The architecture is based on several layers of convolution network followed by several fully connected layers.
 
@@ -89,7 +89,7 @@ I added the additional augumentation for increased training scenarios for the mo
 
 - The images are flipped to provide more addition clockwise direction as the track is mostly anit-clockwise drive. I ensured the steering angle was also altered accordingly to match the flipped image. Random brightness / darkness also added to improve the performance.
 
-![YUV colour Space][image2] ![flipped][image4]
+![Not Flipped][image1] ![Flipped][image4]
 
 - My original model without dropouts had higher loss on the validation set when compared to the training set. I added a droput layer to address this issue.
 
@@ -100,3 +100,10 @@ I added the additional augumentation for increased training scenarios for the mo
 - Introduction of left and right camera data provide a better perspective for the model in recovery scenarios. This is supported by a steering offset of 0.2.
 
 ![Recovery Right](https://github.com/srikanth-narayanan/Udacity-Self-Driving-Car/blob/master/Term-1/CarND-Behavioral-Cloning-P3/images/recovery.gif)
+
+The model was trained with the following settings,
+- EPOCHS - 5.
+- BATCH SIZE - 64.
+
+The car was able to drive the track autonomously without leaving the track using new model trained with improved training set and image augmentation.
+
