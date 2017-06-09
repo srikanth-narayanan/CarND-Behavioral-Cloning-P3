@@ -8,7 +8,7 @@
 [image4]: ./images/flip.png "flip Image"
 [image5]: ./images/normal.png "normal Image"
 [image6]: ./images/resized.png "resized Image"
-[image7]: ./images/recovery.jpg "recovery Image"
+[image7]: ./images/recovery.gif "recovery Image"
 
 The Behaviour cloning project involves in training a convolution neural network to learn a driver behaviour and reproduce the behaviour to autonomously navigate a trained path.
 
@@ -27,9 +27,18 @@ Files Uploaded
 - model.h5 - The trained model weights.
 - Video.mp4 - The video of the center camera during the autonomous drive.
 
+A youtube link of the screen capture is available here.
+
+|										Autonomous Drive Video					       |
+|:------------------------------------------------------------------------------------:|
+|[![Test Track](./images/Track.png)](https://www.youtube.com/watch?v=uAmqHHTDNF8&t=28s)|
+
+
 ## Model Architecture and Training Strategy
 
-The implementation is based on the [NVIDIA model] (https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/). The architecture seems to be proven for this project. The architecture is based on several layers of convolution network followed by several fully connected layers.
+The implementation is based on the [NVIDIA model] (https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/). 
+
+The architecture seems to be proven for this project. The architecture is based on several layers of convolution network followed by several fully connected layers.
 
 The following additions are made to adapt the model to this project.
 - A lambda layer is added to normalise the training data. ( Code line 82)
@@ -46,10 +55,10 @@ The following additions are made to adapt the model to this project.
 |Convolution 		 | Filter 64, Kernel (3 x 3), Stride (2 x 2) , "elu"|
 |Dropout 		 	 | 0.5					 |	
 |Flatten 		 	 | 1164, "relu"			 | 
-|Flatten 		 	 | 100, "relu"			 | 
-|Flatten 		 	 | 50, "relu"			 |
-|Flatten 		 	 | 10, "relu"			 |
-|Flatten 		 	 | 1, 			 		 |
+|Dense  		 	 | 100, "relu"			 | 
+|Dense  		 	 | 50, "relu"			 |
+|Dense  		 	 | 10, "relu"			 |
+|Dense  		 	 | 1, 			 		 |
 
 
 The model uses RELU functions in the dense layer and ELU function in the convolution layer to introduce non-linearity in the layers. 
@@ -62,63 +71,41 @@ After monitoring several training session a learning rate of 1e-4 was choosen fo
 
 The behaviour of the car in the simulator is very sensitive to the quality of the training data and driver behaviour. After serveral attempts a good sample of training data was generated to train the model. Methods employed to train the model is covered in the next section.
 
+- A comparison of the steering angle of the udacity dataset and my initial training set was compared. The udacity steering angle and drive was much smoother and cleaner for the model to learn a better behaviour. Driving with keyboard casued several overshoot. I managed to create a similar dataset to udacity.
 
-|										Autonomous Drive Video					       |
-|:------------------------------------------------------------------------------------:|
-|[![Test Track](./images/Track.png)](https://www.youtube.com/watch?v=uAmqHHTDNF8&t=28s)|
+Example of the normal driving situations.
+![Normal][image5]
 
 
+##### Image Augumentation
 
-###Model Architecture and Training Strategy
+- The normal image was cropped to removed the unwated sky and front hood of the car.
 
-####1. Solution Design Approach
+![Cropped][image3]
 
-The overall strategy for deriving a model architecture was to ...
+- The nvidia model also recommends to use YUV colour space and the accepts a size of 66x200x3
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+![YUV colour Space][image2]
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
+I added the additional augumentation for increased training scenarios for the model.
 
-To combat the overfitting, I modified the model so that ...
+- The images are flipped to provide more addition clockwise direction as the track is mostly anit-clockwise drive. I ensured the steering angle was also altered accordingly to match the flipped image. Random brightness / darkness also added to improve the performance.
 
-Then I ... 
+![YUV colour Space][image2] ![flipped][image4]
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+- My original model without dropouts had higher loss on the validation set when compared to the training set. I added a droput layer to address this issue.
 
-At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
+- The model tested on the simulator autonomous mode performed reasonable in normal curves, but initial version did had not so good performance in sharp corners.
 
-####2. Final Model Architecture
+- A few laps of clockwise direction was added to the dataset for the model to generalise well. A few scenarios of recovery situation was added to key sharp sections. This helped the model to perform better on those situations.
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+- Introduction of left and right camera data provide a better perspective for the model in recovery scenarios. This is supported by a steering offset of 0.2.
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
-
-![alt text][image1]
 
 ####3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
-![alt text][image2]
+
 
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
-
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
-
-Then I repeated this process on track two in order to get more data points.
-
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
-
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
-
-
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
